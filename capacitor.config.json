@@ -1,0 +1,8 @@
+{
+  "appId": "JHub_Expense_Logging_App",
+  "appName": "expensesLoggingApp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

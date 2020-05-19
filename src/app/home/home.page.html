@@ -1,0 +1,77 @@
+<ion-header>
+	<ion-toolbar class="header" color="rafblue">
+		<ion-title>Expenses Logging App</ion-title>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-col size-md="6" offset-md="3" class="ion-text-center">
+				<ion-card class="ion-text-center" color="rafblue">
+					<ion-card-header>
+						<ion-card-title>
+							Welcome to Your Expenses Logging App
+						</ion-card-title>
+					</ion-card-header>
+					<ion-card-content>
+						Upload your expenses and you'll see a running total of your costs at the bottom of the screen
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+			<ion-col size="12" offset-sm="3" *ngIf="!loadedExpenses || loadedExpenses.length <= 0"
+				class="ion-text-center">
+				<ion-card class="ion-text-center">
+					<ion-card-header>
+						<ion-card-title>
+							You Have No Expenses :)
+						</ion-card-title>
+					</ion-card-header>
+				</ion-card>
+			</ion-col>
+			<ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+				<ion-list>
+					<ion-item-sliding *ngFor="let expense of loadedExpenses" #slidingMenu>
+						<ion-item>
+							<ion-thumbnail slot="start">
+								<ion-img [src]="expense.image"></ion-img>
+							</ion-thumbnail>
+							<ion-label>
+								<h2>{{ expense.dateOfExpense | date: "yyyy/MM/dd HH:mm"}}</h2>
+								<p>£ {{ expense.amount }}
+								</p>
+							</ion-label>
+							<div>
+								<ion-icon color="rafblue" name="options" slot="icon-only"> </ion-icon>
+							</div>
+						</ion-item>
+						<ion-item-options>
+							<ion-item-option color="danger" (click)="onDelete(expense.id, slidingMenu)">
+								<ion-icon name="trash" slot="icon-only"></ion-icon>
+							</ion-item-option>
+						</ion-item-options>
+					</ion-item-sliding>
+				</ion-list>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<!-- fab placed to the bottom end -->
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+		<ion-fab-button color="rafblue" (click)="addExpense()">
+			<ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+</ion-content>
+
+<ion-footer class="ion-text-center" *ngIf="!loadedExpenses || loadedExpenses.length <= 0">
+	<ion-toolbar color="rafblue">
+		<ion-title>Total Expenses £0.00</ion-title>
+	</ion-toolbar>
+</ion-footer>
+
+<ion-footer class="ion-text-center" *ngIf="loadedExpenses.length >= 1">
+	<ion-toolbar color="rafblue">
+		<ion-title>Total Expenses £{{ totExpenses }}</ion-title>
+	</ion-toolbar>
+</ion-footer>
